@@ -1,0 +1,117 @@
+{
+  "schema": "day-general-index-v1",
+  "description": "Общие тексты дня: 22 энергии × 31 календарное число.",
+  "pathPattern": "data/day/general/general-day-{energy}.json",
+  "energies": [
+    {
+      "energy": 1,
+      "file": "general-day-01.json",
+      "status": "ready"
+    },
+    {
+      "energy": 2,
+      "file": "general-day-02.json",
+      "status": "ready"
+    },
+    {
+      "energy": 3,
+      "file": "general-day-03.json",
+      "status": "ready"
+    },
+    {
+      "energy": 4,
+      "file": "general-day-04.json",
+      "status": "ready"
+    },
+    {
+      "energy": 5,
+      "file": "general-day-05.json",
+      "status": "ready"
+    },
+    {
+      "energy": 6,
+      "file": "general-day-06.json",
+      "status": "ready"
+    },
+    {
+      "energy": 7,
+      "file": "general-day-07.json",
+      "status": "ready"
+    },
+    {
+      "energy": 8,
+      "file": "general-day-08.json",
+      "status": "ready"
+    },
+    {
+      "energy": 9,
+      "file": "general-day-09.json",
+      "status": "ready"
+    },
+    {
+      "energy": 10,
+      "file": "general-day-10.json",
+      "status": "ready"
+    },
+    {
+      "energy": 11,
+      "file": "general-day-11.json",
+      "status": "ready"
+    },
+    {
+      "energy": 12,
+      "file": "general-day-12.json",
+      "status": "ready"
+    },
+    {
+      "energy": 13,
+      "file": "general-day-13.json",
+      "status": "ready"
+    },
+    {
+      "energy": 14,
+      "file": "general-day-14.json",
+      "status": "ready"
+    },
+    {
+      "energy": 15,
+      "file": "general-day-15.json",
+      "status": "ready"
+    },
+    {
+      "energy": 16,
+      "file": "general-day-16.json",
+      "status": "ready"
+    },
+    {
+      "energy": 17,
+      "file": "general-day-17.json",
+      "status": "ready"
+    },
+    {
+      "energy": 18,
+      "file": "general-day-18.json",
+      "status": "ready"
+    },
+    {
+      "energy": 19,
+      "file": "general-day-19.json",
+      "status": "ready"
+    },
+    {
+      "energy": 20,
+      "file": "general-day-20.json",
+      "status": "ready"
+    },
+    {
+      "energy": 21,
+      "file": "general-day-21.json",
+      "status": "ready"
+    },
+    {
+      "energy": 22,
+      "file": "general-day-22.json",
+      "status": "ready"
+    }
+  ]
+}
