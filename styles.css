@@ -1,0 +1,268 @@
+:root{--ink:#161826;--soft:#494c60;--paper:#f7f8fc;--line:rgba(22,24,38,.1);--violet:#7563d9;--plum:#553862;--teal:#236c72;--gold:#b78c49;--radius:26px;--pad:clamp(20px,5vw,38px)}*{box-sizing:border-box}html{background:var(--paper)}body{margin:0;background:radial-gradient(circle at 95% 0,rgba(117,99,217,.16),transparent 28rem),var(--paper);color:var(--ink);font:16px/1.5 Inter,system-ui,sans-serif}button,input,select{font:inherit}button{cursor:pointer}.app-shell{max-width:680px;min-height:100dvh;margin:auto}.screen{display:none;min-height:100dvh;padding:max(18px,env(safe-area-inset-top)) var(--pad) max(36px,env(safe-area-inset-bottom))}.screen.is-active{display:block;animation:up .35s ease}.topbar{height:46px;display:flex;align-items:center;gap:10px}.brand-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:12px;background:var(--ink);color:#fff;font:21px Georgia}.brand-name{margin-right:auto;font-size:14px;font-weight:800}.round-button,.back-button{border:0;background:transparent;color:var(--ink)}.round-button{width:42px;height:42px;border-radius:50%;background:#fff;font-size:18px}.back-button{padding:8px 0;font-weight:800}.topbar-spacer{width:80px}.hero{padding:68px 0 34px}.eyebrow,.month-kicker{margin:0 0 10px;color:var(--teal);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}h1,h2,h3{margin:0;letter-spacing:-.055em;line-height:1.03}h1{font-size:clamp(42px,12vw,68px)}.hero-copy,.year-intro>p{max-width:34ch;margin:20px 0 0;color:var(--soft)}.products{display:grid;gap:13px}.product-card{position:relative;min-height:128px;overflow:hidden;padding:20px;border:0;border-radius:var(--radius);color:#fff;text-align:left;box-shadow:0 18px 46px rgba(40,42,70,.13);transition:transform .2s ease}.product-card:active,.primary-button:active,.pdf-button:active{transform:scale(.98)}.product-card::after{content:"";position:absolute;right:-32px;bottom:-72px;width:155px;height:155px;border:1px solid #ffffff66;border-radius:50%;box-shadow:0 0 0 22px #ffffff18,0 0 0 48px #ffffff0d}.featured{min-height:178px;background:linear-gradient(132deg,#1c3046,#465187 57%,#9a7ed0)}.coral{background:linear-gradient(130deg,#9a4763,#e58c94)}.violet{background:linear-gradient(130deg,#3c2e68,#9377cc)}.teal{background:linear-gradient(130deg,#15595e,#58aab1)}.blue{background:linear-gradient(130deg,#28345b,#4d79ad)}.dark{background:linear-gradient(130deg,#242534,#4b4d65)}.product-number{display:block;font-size:12px;opacity:.7}.product-title{display:block;margin-top:23px;font-size:27px;font-weight:800;letter-spacing:-.05em;line-height:1}.product-copy{display:block;max-width:24ch;margin-top:9px;font-size:13px;opacity:.87}.product-arrow{position:absolute;z-index:1;top:20px;right:20px;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#ffffff22;font-size:20px}.year-intro{padding:52px 0 28px}.calculation-form{display:grid;gap:16px;padding:20px;border:1px solid var(--line);border-radius:var(--radius);background:#ffffffdd;box-shadow:0 18px 46px rgba(40,42,70,.1)}.calculation-form label{display:grid;gap:7px;font-size:13px;font-weight:800}.calculation-form input,.calculation-form select{width:100%;min-height:54px;padding:0 14px;border:1px solid var(--line);border-radius:15px;background:#fff}.primary-button,.pdf-button{min-height:56px;border:0;border-radius:17px;background:var(--ink);color:#fff;font-weight:800}.report{padding-top:52px}.report-lead h2{font-size:clamp(36px,9.5vw,56px)}.report-lead p:last-child{color:var(--soft);margin:20px 0 0}.birthday-note{padding:14px 16px;border-radius:16px;background:#236c7212;color:#25595d;font-size:14px}.months{display:grid;gap:10px;margin-top:22px}.month-card{overflow:hidden;border:1px solid var(--line);border-radius:20px;background:#fff}.month-card summary{display:grid;grid-template-columns:1fr 32px 20px;gap:8px;align-items:center;min-height:76px;padding:14px 17px;font-weight:800;list-style:none}.month-card summary::-webkit-details-marker{display:none}.month-card summary span{display:grid}.month-card small{color:var(--gold);font-size:10px}.month-card summary strong{color:var(--plum);font:24px Georgia;text-align:center}.month-card summary i{font-size:23px;font-style:normal}.month-card[open] summary i{transform:rotate(45deg)}.month-content{padding:4px 17px 22px;border-top:1px solid var(--line)}.month-content h3{font-size:29px}.month-content>p:not(.month-kicker){color:var(--soft)}.draft-note{padding-top:16px;border-top:1px dashed var(--line);font-size:13px}.pdf-button{width:100%;margin-top:24px;background:linear-gradient(130deg,var(--plum),var(--violet))}dialog{width:min(calc(100% - 40px),440px);padding:28px;border:0;border-radius:28px;color:var(--ink)}dialog::backdrop{background:#0d0e196b}.dialog-close{float:right;border:0;background:transparent;font-size:27px}dialog h2{font-size:31px}@keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}@media(min-width:700px){.product-card:hover{transform:translateY(-4px)}}@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+
+
+/* Personal day uses the same soft panels as the other calculations. */
+.personal-day-overlay{
+  position:fixed;inset:0;z-index:1000;display:grid;place-items:center;
+  padding:12px;background:rgba(26,34,46,.54);backdrop-filter:blur(5px);
+}
+.personal-day-page{
+  position:relative;width:min(100%,620px);max-height:calc(100dvh - 24px);
+  overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+  padding:28px 25px 25px;border:1px solid rgba(197,166,118,.42);border-radius:32px;
+  background:radial-gradient(circle at 0 0,rgba(224,232,245,.7),transparent 52%),
+    radial-gradient(circle at 100% 100%,rgba(244,224,227,.45),transparent 48%),
+    linear-gradient(145deg,#fffdfa,#f8f6f4);
+  box-shadow:0 25px 65px rgba(28,40,57,.24),inset 0 1px rgba(255,255,255,.92);
+  color:#293b5e;
+}
+.personal-day-page .personal-day-close{
+  position:absolute;top:18px;right:19px;display:grid;place-items:center;
+  width:46px;height:46px;padding:0;border:0;border-radius:50%;
+  background:#ecf0f7;color:#31517a;font:32px/1 Arial,sans-serif;
+}
+.personal-day-page .eyebrow{
+  margin:5px 56px 10px 0;color:#7d8ea7;font-size:11px;font-weight:800;
+  letter-spacing:.16em;text-transform:uppercase;
+}
+.personal-day-page h2{
+  margin:0 0 13px;color:#263d65;font:400 clamp(39px,9vw,56px)/.99 Georgia,"Times New Roman",serif;
+  letter-spacing:-.055em;
+}
+.personal-day-page .personal-day-lead{
+  margin:0 2px 17px;color:#66738a;font:400 16px/1.45 Georgia,"Times New Roman",serif;
+}
+.personal-day-general,.personal-day-form-panel,.personal-day-main{
+  margin-top:11px;padding:18px 19px;border:1px solid rgba(172,149,115,.24);
+  border-radius:24px;background:rgba(255,255,255,.77);
+  box-shadow:0 10px 24px rgba(45,54,78,.06),inset 0 1px rgba(255,255,255,.94);
+}
+.personal-day-general{
+  background:linear-gradient(130deg,rgba(250,251,255,.93),rgba(245,239,236,.82));
+}
+.personal-day-date,.personal-day-form-kicker{
+  margin:0 0 9px;color:#9d774d;font-size:11px;font-weight:800;
+  letter-spacing:.11em;line-height:1.3;text-transform:uppercase;
+}
+.personal-day-general h3,.personal-day-main h3{
+  margin:0 0 9px;color:#315175;font:400 clamp(29px,7.5vw,42px)/1.05 Georgia,"Times New Roman",serif;
+  letter-spacing:-.04em;
+}
+.personal-day-general p:not(.personal-day-date),.personal-day-main p{
+  margin:0;color:#566477;font:15px/1.42 Inter,system-ui,sans-serif;
+}
+.personal-day-form-panel{background:rgba(255,255,255,.67)}
+.personal-day-form-kicker{margin-bottom:12px;color:#826e72;font-size:12px;letter-spacing:.08em}
+.personal-day-form-panel form{display:grid;gap:10px}
+.personal-day-form-panel label{display:block}
+.personal-day-form-panel input{
+  width:100%;min-height:52px;padding:11px 16px;border:1px solid rgba(111,137,173,.33);
+  border-radius:17px;background:rgba(255,255,255,.96);color:#293b5e;
+  font:600 20px Inter,system-ui,sans-serif;outline:none;
+}
+.personal-day-form-panel input::placeholder{color:#a6acb7;opacity:1}
+.personal-day-form-panel input:focus{
+  border-color:#6179ae;box-shadow:0 0 0 4px rgba(99,120,171,.17);
+}
+.personal-day-submit{
+  width:100%;min-height:54px;border:0;border-radius:18px;
+  background:linear-gradient(125deg,#304779,#5871af);color:#fff;
+  font:750 17px Inter,system-ui,sans-serif;
+  box-shadow:inset 0 1px rgba(255,255,255,.18),0 12px 23px rgba(48,71,121,.19);
+}
+.personal-day-submit:disabled{opacity:1;background:#173f7a;box-shadow:0 10px 22px rgba(23,63,122,.24)}
+.personal-day-submit:not(:disabled):active{transform:scale(.985)}
+.personal-day-advice{margin-top:30px;padding:18px 16px 16px;border-radius:18px}.personal-day-advice h4{margin:0 0 18px;font-size:22px;line-height:1.2;text-align:center}.personal-day-advice-icon{display:inline-grid;place-items:center;width:32px;height:32px;margin-right:7px;border-radius:50%;color:#fff;font-size:22px;vertical-align:-4px}.personal-day-advice ul{margin:0;padding-left:22px}.personal-day-advice li{margin:12px 0;font-size:16px;line-height:1.45}.personal-day-need{background:#e8f7ee;border:1px solid #a8dfbd}.personal-day-need h4{color:#08753e}.personal-day-need .personal-day-advice-icon{background:#08a85b}.personal-day-avoid{background:#fff0ef;border:1px solid #efb7b2}.personal-day-avoid h4{color:#b52e27}.personal-day-avoid .personal-day-advice-icon{background:#d9362e}
+.personal-day-error{margin:0;color:#a23e43;font-size:14px}
+.personal-day-error[hidden],.personal-day-result[hidden]{display:none}
+.personal-day-result{margin-top:15px}
+.personal-day-main{margin:0;position:relative}.personal-day-label{margin:0 0 14px;color:#234578;font:800 31px/1.1 Georgia,serif;letter-spacing:.06em;text-align:center}.personal-day-code{position:absolute;top:12px;right:16px;color:#9aa6b9;font:600 10px/1 Inter,system-ui,sans-serif;letter-spacing:.08em;opacity:.72}
+.personal-day-main h4{margin:20px 0 7px;color:#3a5273;font-size:18px}
+.personal-day-main p+p{margin-top:10px}
+@media(max-width:520px){
+ .personal-day-overlay{padding:9px}
+ .personal-day-page{max-height:calc(100dvh - 18px);padding:25px 19px 20px;border-radius:28px}
+ .personal-day-page h2{font-size:clamp(38px,10vw,48px)}
+ .personal-day-page .personal-day-lead{font-size:15px}
+ .personal-day-general,.personal-day-form-panel,.personal-day-main{padding:16px;border-radius:22px}
+ .personal-day-general h3,.personal-day-main h3{font-size:clamp(28px,8vw,37px)}
+}
+@media(prefers-reduced-motion:reduce){.personal-day-submit:active{transform:none}}
+
+/* Personal day: compact reading surface */
+.personal-day-overlay{padding:8px;background:#eef2f6;backdrop-filter:none;-webkit-backdrop-filter:none;place-items:start center;align-content:start}
+.personal-day-page{width:min(100%,700px);max-height:calc(100dvh - 16px);padding:26px 24px 24px;border-radius:30px;background:radial-gradient(circle at 0 0,rgba(226,233,245,.82),transparent 48%),radial-gradient(circle at 100% 100%,rgba(246,226,231,.48),transparent 46%),linear-gradient(145deg,#fffdfa,#f6f4f3);box-shadow:0 24px 64px rgba(22,30,43,.28),inset 0 1px rgba(255,255,255,.94)}
+.personal-day-page .personal-day-lead{max-width:42ch;margin:14px 0 18px;font-size:17px;line-height:1.42}
+.personal-day-general,.personal-day-form-panel,.personal-day-main{margin-top:12px;padding:18px 20px;border-radius:22px}
+.personal-day-general h3,.personal-day-main h3{font-size:clamp(30px,6.5vw,40px)}
+.personal-day-general p:not(.personal-day-date),.personal-day-main p{font-size:17px;line-height:1.45}
+.personal-day-form-panel .personal-day-date{margin:12px 0 18px;color:#234578;font:800 18px/1.25 Inter,system-ui,sans-serif;letter-spacing:.08em}.personal-day-form-kicker{max-width:none;font-size:13px;line-height:1.3}
+.personal-day-form-panel input{min-height:56px;font-size:20px}
+.personal-day-submit{min-height:56px;font-size:17px}
+@media(max-width:520px){.personal-day-overlay{padding:6px}.personal-day-page{width:100%;max-height:calc(100dvh - 12px);padding:22px 18px 20px;border-radius:28px}.personal-day-page .personal-day-lead{font-size:16px;line-height:1.4;margin:12px 0 16px}.personal-day-general,.personal-day-form-panel,.personal-day-main{padding:18px 17px;border-radius:22px}.personal-day-general p:not(.personal-day-date),.personal-day-main p{font-size:17px;line-height:1.43}}
+
+.personal-month-preview{margin-top:14px;padding:20px;border:1px solid rgba(172,149,115,.24);border-radius:22px;background:rgba(255,255,255,.82);box-shadow:0 10px 24px rgba(45,54,78,.06)}
+.personal-month-heading{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}.personal-month-kicker{margin:0 0 4px;color:#9d774d;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.personal-month-heading h3{margin:0;color:#234578;font:700 27px/1.05 Georgia,serif;text-transform:capitalize}.personal-month-mark{color:#b78c49;font-size:28px}
+.personal-month-weekdays,.personal-month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}.personal-month-weekdays{margin-bottom:7px;color:#8b96a8;font-size:11px;font-weight:800;text-align:center}.personal-month-day,.personal-month-empty{min-height:38px}.personal-month-day{display:grid;place-items:center;position:relative;padding:0;border:1px solid transparent;border-radius:11px;background:#f2f4f7;color:#29466f;font-weight:800}.personal-month-day:active{transform:scale(.95)}.personal-month-good{background:#e0f5e8;border-color:#a4dfbb;color:#08753e}.personal-month-chance{background:#fff3d9;border-color:#e4c67f;color:#956c25}.personal-month-risk{background:#fde6e4;border-color:#efb2ad;color:#b52e27}.personal-month-neutral{background:#eef1f5;color:#52677f}.personal-month-locked{background:#e7e9ed;color:#a7afbc;border-color:#dde1e7}.personal-month-lock{position:absolute;right:4px;bottom:1px;font-size:10px;color:#9ca5b3}.personal-month-legend{display:flex;flex-wrap:wrap;gap:8px 13px;margin-top:14px;color:#68758a;font-size:11px}.personal-month-legend span{display:inline-flex;align-items:center;gap:5px}.personal-month-dot{width:9px;height:9px;border-radius:50%;display:inline-block}.personal-month-dot.good{background:#15ab61}.personal-month-dot.chance{background:#d0a23b}.personal-month-dot.risk{background:#db433b}.personal-month-dot.locked{background:#aeb6c2}.personal-month-open{width:100%;margin-top:16px;padding:12px 14px;border:0;border-radius:14px;background:#234578;color:#fff;font-weight:800}.personal-month-open span{float:right;font-size:18px}
+@media(max-width:520px){.personal-month-preview{padding:17px}.personal-month-grid,.personal-month-weekdays{gap:5px}.personal-month-day,.personal-month-empty{min-height:35px}.personal-month-legend{font-size:10px;gap:7px 9px}}
+
+section.personal-day-main .personal-day-label{display:block;margin:0 0 18px;color:#173f7a!important;font:800 38px/1.05 Inter,system-ui,sans-serif!important;letter-spacing:.08em;text-align:center;text-transform:uppercase}
+@media(max-width:520px){section.personal-day-main .personal-day-label{font-size:34px!important;letter-spacing:.06em}}
+
+.personal-month-legend{justify-content:center;gap:10px 16px;margin-top:17px;color:#53647c;font-size:14px;font-weight:700}
+.personal-month-dot{width:14px;height:14px;flex:0 0 14px}.personal-month-dot.avoid{background:#9e2020}
+.personal-month-legend span{gap:6px}
+
+.personal-month-details{margin-top:18px;padding:18px 20px;border:1px solid #dbe3ee;border-radius:22px;background:#fbfcff}.personal-month-details-lead{margin:0 0 12px;color:#66758b;font-size:14px;line-height:1.45}.personal-month-detail-list{display:grid;gap:8px}.personal-month-detail-list p{margin:0;padding:9px 11px;border-radius:12px;color:#31496d;font-size:15px;line-height:1.35}.personal-month-detail-list p strong{font-weight:800}.personal-month-detail-good{background:#e8f8ef}.personal-month-detail-chance{background:#fff4d8}.personal-month-detail-risk{background:#fff0ed}.personal-month-detail-avoid{background:#ffe5e5}
+
+.personal-month-day-card{margin:10px 0;border:1px solid #dbe3ee;border-radius:16px;overflow:hidden;background:#fff}.personal-month-day-card summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 15px;cursor:pointer;list-style:none;color:#2f4c78}.personal-month-day-card summary::-webkit-details-marker{display:none}.personal-month-day-card summary span{display:grid;gap:3px}.personal-month-day-card summary strong{font-size:16px}.personal-month-day-card summary em{font-style:normal;font-size:13px;color:#62758e}.personal-month-day-card summary b{font-size:24px;font-weight:400}.personal-month-day-card[open] summary b{transform:rotate(45deg)}.personal-month-day-content{padding:0 15px 15px;color:#4f6078;font-size:15px;line-height:1.45}.personal-month-day-content>p{margin:0 0 12px}.personal-month-detail-good{border-color:#a8dfbd;background:#f1fbf5}.personal-month-detail-chance{border-color:#e9c876;background:#fffaf0}.personal-month-detail-risk,.personal-month-detail-avoid{border-color:#efb7b2;background:#fff6f5}.personal-month-mini{margin-top:9px;padding:9px 11px;border-radius:10px;font-size:14px}.personal-month-mini.need{background:#e8f7ee}.personal-month-mini.avoid{background:#fff0ef}.personal-month-mini strong{display:block;margin-bottom:4px}.personal-month-mini ul{margin:0;padding-left:18px}.personal-month-mini li{margin:3px 0}
+
+.personal-month-summary{margin:14px 0;padding:20px 20px;border-radius:22px;box-shadow:0 8px 22px rgba(31,57,92,.08)}.personal-month-summary h4{margin:0 0 8px;font-size:21px}.personal-month-summary p{margin:0 0 7px;font-weight:800;color:#304c74}.personal-month-summary div{display:flex;flex-direction:column;gap:8px}.personal-month-summary span{display:block;line-height:1.35}.personal-month-summary small{display:block;color:#52657e;line-height:1.4;font-size:14px}.personal-month-summary-good{background:linear-gradient(135deg,#d8f8e6 0%,#f0fff6 100%);border:2px solid #8ed9ac}.personal-month-summary-good h4{color:#08753e}.personal-month-summary-avoid{background:linear-gradient(135deg,#ffe1df 0%,#fff5f4 100%);border:2px solid #f0aaa5}.personal-month-summary-avoid h4{color:#b52e27}.personal-month-summary-chance{background:linear-gradient(135deg,#ffe7a8 0%,#fff8e5 100%);border:2px solid #e3b84f}.personal-month-summary-chance h4{color:#9b701d}.personal-month-all-title{margin:24px 0 10px;color:#2f4c78;font-size:21px}
+
+.personal-month-summary-risk{background:linear-gradient(135deg,#ffe1df 0%,#fff5f4 100%);border:2px solid #f0aaa5}.personal-month-summary-risk h4{color:#b52e27}
+
+.personal-month-summary h4{display:flex;align-items:center;gap:12px;font-weight:900;font-size:25px}.personal-month-summary-icon{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;color:#fff;font-size:27px;font-weight:900;line-height:1}.personal-month-summary-good .personal-month-summary-icon{background:#08a95a}.personal-month-summary-risk .personal-month-summary-icon,.personal-month-summary-avoid .personal-month-summary-icon{background:#e3352f}.personal-month-summary-chance .personal-month-summary-icon{background:#d49a24}.personal-month-summary strong{font-weight:900;color:#274674}.personal-month-summary span{font-weight:600}
+/* Месячный разбор: акцентные карточки как в утверждённом референсе */
+.personal-month-summary{margin:18px 0;padding:26px 24px;border-radius:28px;box-shadow:0 14px 30px rgba(33,55,83,.12)}
+.personal-month-summary h4{margin:0 0 22px;display:flex;align-items:center;gap:16px;font-size:29px;line-height:1.04;font-weight:950;letter-spacing:-.02em}
+.personal-month-summary div{gap:18px}
+.personal-month-summary-line{display:block;position:relative;padding-left:34px;font-size:22px;line-height:1.35;font-weight:800;color:#4f4a46}
+.personal-month-summary-line i{position:absolute;left:0;top:-1px;font-style:normal;font-size:34px;line-height:1;color:currentColor}
+.personal-month-summary-line strong{font-weight:950;color:#46413d}
+.personal-month-summary-icon{width:68px;height:68px;flex:0 0 68px;font-size:43px;box-shadow:0 8px 16px rgba(0,0,0,.12)}
+.personal-month-summary-good{background:radial-gradient(circle at 88% 14%,rgba(207,255,225,.9) 0 2%,transparent 11%),linear-gradient(145deg,#c7ffe1 0%,#e6fff0 50%,#f6fff9 100%);border:2px solid #76dca4}
+.personal-month-summary-good h4{color:#008142}
+.personal-month-summary-good .personal-month-summary-line{color:#4d4b46}
+.personal-month-summary-risk{background:radial-gradient(circle at 88% 14%,rgba(255,221,216,.95) 0 2%,transparent 11%),linear-gradient(145deg,#ffd9d5 0%,#fff0ee 52%,#fffafa 100%);border:2px solid #f39f98}
+.personal-month-summary-risk h4{color:#ce3028}
+.personal-month-summary-risk .personal-month-summary-line{color:#514a48}
+.personal-month-summary-chance{background:radial-gradient(circle at 88% 14%,rgba(255,237,171,.95) 0 2%,transparent 11%),linear-gradient(145deg,#ffe39a 0%,#fff1c9 52%,#fffaf0 100%);border:2px solid #deb447}
+.personal-month-summary-chance h4{color:#a8730e}
+.personal-month-summary-chance .personal-month-summary-line{color:#514a48}
+@media (max-width:560px){.personal-month-summary{padding:22px 20px;border-radius:24px}.personal-month-summary h4{font-size:26px;gap:14px}.personal-month-summary-line{font-size:20px;padding-left:29px}.personal-month-summary-line i{font-size:30px}.personal-month-summary-icon{width:58px;height:58px;flex-basis:58px;font-size:36px}}
+
+/* Более широкий месячный разбор на телефоне */
+.personal-day-page{width:min(100%,920px)}
+.personal-month-details{padding:14px 12px}
+.personal-month-summary{width:100%;box-sizing:border-box;padding:22px 20px}
+.personal-month-summary h4{font-size:26px;gap:13px;margin-bottom:18px}
+.personal-month-summary-line{font-size:19px;line-height:1.32;padding-left:27px}
+.personal-month-summary-line i{font-size:29px}
+.personal-month-summary-icon{width:56px;height:56px;flex-basis:56px;font-size:35px}
+@media(max-width:560px){.personal-day-overlay{padding:6px}.personal-day-page{width:100%;padding-left:12px;padding-right:12px}.personal-month-details{padding:10px 6px;border:0;background:transparent}.personal-month-summary{padding:20px 18px;border-radius:24px}.personal-month-summary h4{font-size:24px}.personal-month-summary-line{font-size:18px}}
+
+
+/* Компактные кнопки списка дней */
+.personal-month-detail-list{gap:9px}
+.personal-month-day-card{width:min(100%,340px);margin:0 auto;border-radius:18px;box-shadow:0 5px 14px rgba(43,65,98,.055);transition:transform .22s ease,box-shadow .22s ease}
+.personal-month-day-card summary{min-height:58px;padding:0 17px;gap:14px}
+.personal-month-day-card summary strong{font-size:18px;line-height:1.15;font-weight:850}
+.personal-month-day-card summary b{font-size:25px;line-height:1;color:#35578d;transition:transform .25s ease}
+.personal-month-day-card:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(43,65,98,.09)}
+.personal-month-day-card[open]{width:100%;max-width:640px}
+.personal-month-day-card[open] summary{min-height:58px}
+.personal-month-day-content{padding:3px 17px 17px;font-size:15px}
+@media(max-width:560px){
+  .personal-month-detail-list{gap:8px}
+  .personal-month-day-card{width:calc(100% - 12px);border-radius:17px}
+  .personal-month-day-card summary{min-height:56px;padding:0 16px}
+  .personal-month-day-card summary strong{font-size:17px}
+}
+
+
+/* Карточки «Сегодня нужно / нельзя»: заголовок выше, пункты с воздухом */
+.personal-day-main .personal-day-advice{
+  margin-top:34px;
+  padding:22px 24px 28px;
+}
+.personal-day-main .personal-day-advice h4{
+  margin:0 0 34px !important;
+  text-align:center;
+}
+.personal-day-main .personal-day-advice ul{
+  margin:0;
+  padding-left:27px;
+  display:grid;
+  gap:21px;
+}
+.personal-day-main .personal-day-advice li{
+  margin:0 !important;
+}
+@media(max-width:560px){
+  .personal-day-main .personal-day-advice{padding:20px 22px 26px}
+  .personal-day-main .personal-day-advice h4{margin-bottom:31px !important}
+  .personal-day-main .personal-day-advice ul{gap:19px}
+}
+
+
+/* Более собранные карточки советов */
+.personal-day-main .personal-day-advice{
+  width:calc(100% - 24px);
+  box-sizing:border-box;
+  margin-left:auto;
+  margin-right:auto;
+}
+.personal-day-main .personal-day-advice ul{gap:14px}
+@media(max-width:560px){
+  .personal-day-main .personal-day-advice{width:calc(100% - 18px)}
+  .personal-day-main .personal-day-advice ul{gap:13px}
+}
+
+/* В сводке сначала смысл, затем отдельной строкой даты */
+.personal-month-summary-line{
+  display:grid;
+  grid-template-columns:24px minmax(0,1fr);
+  gap:3px;
+  padding-left:0;
+}
+.personal-month-summary-line i{position:static;grid-column:1;grid-row:1 / span 2}
+.personal-month-summary-line > span{display:block;grid-column:2}
+.personal-month-summary-line strong,
+.personal-month-summary-line em{display:block}
+.personal-month-summary-line em{margin-top:3px;font-style:normal;font-weight:750;color:inherit}
+
+/* Кнопка сохранения результата */
+.personal-month-pdf{
+  display:block;
+  width:min(100%,340px);
+  margin:24px auto 4px;
+  min-height:54px;
+  border:0;
+  border-radius:17px;
+  background:linear-gradient(135deg,#244a82,#365e99);
+  color:#fff;
+  font:800 16px/1 Inter,system-ui,sans-serif;
+  box-shadow:0 10px 20px rgba(36,74,130,.22);
+}
+.personal-month-pdf:active{transform:scale(.985)}
+
+@media print{
+  body>*:not(.personal-day-overlay){display:none!important}
+  .personal-day-overlay{position:static!important;display:block!important;padding:0!important;background:#fff!important}
+  .personal-day-card{width:100%!important;max-height:none!important;overflow:visible!important;box-shadow:none!important;border:0!important}
+  .personal-day-close,.personal-day-form-panel,.personal-month-open,.personal-month-pdf{display:none!important}
+  .personal-month-details{display:block!important;border:0!important;background:#fff!important}
+  .personal-month-day-card{width:100%!important;max-width:none!important;break-inside:avoid}
+  .personal-month-day-card[open] .personal-month-day-content{display:block!important}
+}
+
+
+/* Точка идёт рядом с названием категории, а не отдельной строкой */
+.personal-month-summary .personal-month-summary-line{
+  display:grid;
+  grid-template-columns:24px minmax(0,1fr);
+  align-items:start;
+}
+.personal-month-summary .personal-month-summary-line > i{
+  position:static;
+  display:block;
+  grid-column:1;
+  grid-row:1 / span 2;
+  margin-top:2px;
+}
+.personal-month-summary .personal-month-summary-line > span{
+  display:block;
+  grid-column:2;
+  grid-row:1;
+}
