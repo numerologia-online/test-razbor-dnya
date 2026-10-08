@@ -6,12 +6,14 @@
   <meta name="theme-color" content="#eef2f6">
   <meta name="description" content="Личный нумерологический расчёт дня, календарь на месяц и прогноз в PDF.">
   <title>Личный расчёт дня | Нумерология Онлайн</title>
-  <link rel="canonical" href="https://numerologia-online.github.io/test-razbor-dnya/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Личный расчёт дня">
   <meta property="og:description" content="Узнайте свой личный день и получите прогноз на месяц.">
-  <meta property="og:url" content="https://numerologia-online.github.io/test-razbor-dnya/">
-  <base href="/test-razbor-dnya/">
+  <script>
+    const siteBase = document.createElement("base");
+    siteBase.href = location.hostname.endsWith(".github.io") ? "/test-razbor-dnya/" : "/";
+    document.head.appendChild(siteBase);
+  </script>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="styles.css?v=209">
   <style>
