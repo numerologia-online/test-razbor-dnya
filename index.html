@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#eef2f6">
+  <meta name="description" content="Личный нумерологический расчёт дня, календарь на месяц и прогноз в PDF.">
+  <title>Личный расчёт дня | Нумерология Онлайн</title>
+  <link rel="canonical" href="https://numerologia-online.github.io/test-razbor-dnya/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Личный расчёт дня">
+  <meta property="og:description" content="Узнайте свой личный день и получите прогноз на месяц.">
+  <meta property="og:url" content="https://numerologia-online.github.io/test-razbor-dnya/">
+  <base href="/test-razbor-dnya/">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="styles.css?v=209">
+  <style>
+    html, body { min-height: 100%; background: #eef2f6; }
+    #day-loading { max-width: 480px; margin: 20vh auto; padding: 20px; color: #294b70;
+      text-align: center; font: 16px/1.6 system-ui, sans-serif; }
+  </style>
+</head>
+<body class="personal-day-only-page">
+  <main id="day-loading" aria-live="polite">Открываем ваш личный расчёт дня…</main>
+  <noscript>Для расчёта дня включите JavaScript в настройках браузера.</noscript>
+  <script type="module">
+    import("./personal-day-feature.js?v=40")
+      .then(({ openPersonalDay }) => {
+        openPersonalDay();
+        document.querySelector(".personal-day-close")?.remove();
+        document.querySelector("#day-loading")?.remove();
+      })
+      .catch((error) => {
+        console.error("Не удалось открыть личный день:", error);
+        document.querySelector("#day-loading").textContent =
+          "Не удалось открыть расчёт. Проверьте подключение к интернету и обновите страницу.";
+      });
+  </script>
+</body>
+</html>
