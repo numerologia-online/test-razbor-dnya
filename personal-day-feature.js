@@ -9,35 +9,65 @@ const reduce22 = (value) => {
   return n || 22;
 };
 
-const personalDay = ({ day, month }, date = new Date()) => {
-  const yearSum = String(date.getFullYear()).split("").reduce((a, n) => a + Number(n), 0);
-  const personalYear = reduce22(day + month + yearSum);
-  const personalMonth = reduce22(personalYear + date.getMonth() + 1);
-  return reduce22(personalMonth + date.getDate());
+// Авторская формула выбора из 682 готовых текстов.
+// Личные год, месяц и день рассчитываются в цикле 1–9, без смешения со шкалой 22 энергий.
+// Период для выбора текста определяется календарным годом; месячные прогнозы не меняем.
+const sumYearDigits = (year) => String(year).split("").reduce((sum, digit) => sum + Number(digit), 0);
+const reduce9 = (value) => {
+  let n = Math.abs(Math.trunc(Number(value) || 0));
+  while (n > 9) n = String(n).split("").reduce((sum, digit) => sum + Number(digit), 0);
+  return n || 9;
+};
+const lifePathNumber = ({ day, month, year }) => {
+  let n = sumYearDigits(day) + sumYearDigits(month) + sumYearDigits(year);
+  while (n > 9 && n !== 11 && n !== 22 && n !== 33) {
+    n = String(n).split("").reduce((sum, digit) => sum + Number(digit), 0);
+  }
+  return n;
+};
+const reduce31 = (value) => {
+  let n = Math.abs(Math.trunc(Number(value) || 0));
+  while (n > 31) n -= 31;
+  return n || 31;
+};
+const personalDay = ({ day, month, year }, date = new Date()) => {
+  const today = date.getDate();
+  const currentMonth = date.getMonth() + 1;
+  const currentYear = date.getFullYear();
+  const personalYear = reduce9(day + month + sumYearDigits(currentYear));
+  const personalMonth = reduce9(personalYear + currentMonth);
+  const personalDayNumber = reduce9(personalMonth + today);
+  const universalDay = reduce9(today + currentMonth + sumYearDigits(currentYear));
+  const lifePath = lifePathNumber({ day, month, year });
+  const energy = reduce22(personalDayNumber + personalMonth + universalDay + day + currentMonth);
+  const personalNumber = reduce31(lifePath + day + today + sumYearDigits(year));
+  return { energy, personalNumber };
 };
 
 // В старых банках энергии 1 ключи вида "1-1", в остальных — "1".
-const findDayEntry = (entries, energy, calendarDay) =>
-  entries?.[String(calendarDay)] ?? entries?.[`${energy}-${calendarDay}`];
+// Вторая цифра новой связки — персональная позиция, а не календарное число.
+const findDayEntry = (entries, energy, personalNumber) =>
+  entries?.[String(personalNumber)] ?? entries?.[`${energy}-${personalNumber}`];
 
 const loadPersonalDay = async (birth, date = new Date()) => {
-  const day = personalDay(birth, date);
+  const { energy, personalNumber } = personalDay(birth, date);
   const calendarDay = date.getDate();
   try {
-    const response = await fetch(`./data/day/general/general-day-${String(day).padStart(2, "0")}.json?v=3`);
+    const response = await fetch(`./data/day/general/general-day-${String(energy).padStart(2, "0")}.json?v=8`);
     if (!response.ok) throw new Error("personal day bank unavailable");
     const bank = await response.json();
-    const entry = findDayEntry(bank.entries, day, calendarDay);
+    const entry = findDayEntry(bank.entries, energy, personalNumber);
     let practical = null;
     try {
-      const practicalResponse = await fetch(`./data/day/practical/practical-day-${String(day).padStart(2, "0")}.json?v=1`);
+      const practicalResponse = await fetch(`./data/day/practical/practical-day-${String(energy).padStart(2, "0")}.json?v=4`);
       if (practicalResponse.ok) practical = await practicalResponse.json();
     } catch {}
-    const advice = findDayEntry(practical?.entries, day, calendarDay) || {};
-    if (entry?.text) return { energy: day, calendarDay, text: entry.text, todayNeed: advice.todayNeed || [], todayAvoid: advice.todayAvoid || [] };
+    const advice = findDayEntry(practical?.entries, energy, personalNumber) || {};
+    if (entry?.text) return { energy, personalNumber, calendarDay, text: entry.text, todayNeed: advice.todayNeed || [], todayAvoid: advice.todayAvoid || [] };
   } catch {}
   return {
-    energy: day,
+    energy,
+    personalNumber,
     calendarDay,
     text: "Не удалось загрузить текст дня. Обновите страницу и попробуйте ещё раз.",
     todayNeed: [],
@@ -63,18 +93,18 @@ const animateScroll = (node, targetTop, duration = 980) => {
   };
   requestAnimationFrame(step);
 };
-const calendarInfo = (energy, calendarDay) => {
-  const link = getPersonalMonthLink(energy, calendarDay);
+const calendarInfo = (energy, personalNumber) => {
+  const link = getPersonalMonthLink(energy, personalNumber);
   return link ? { ...link, label: link.group } : { status: "neutral", group: "", label: "" };
 };
 const monthMarkedDays = (birth, date = new Date()) => {
   const total = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
   const selected = new Map();
   for (let day = 1; day <= total; day += 1) {
-    const energy = personalDay(birth, new Date(date.getFullYear(), date.getMonth(), day));
-    const info = calendarInfo(energy, day);
+    const { energy, personalNumber } = personalDay(birth, new Date(date.getFullYear(), date.getMonth(), day));
+    const info = calendarInfo(energy, personalNumber);
     // Окрашиваем только заранее отмеченные сильные связки; остальные дни серые.
-    if (info.status !== "neutral") selected.set(day, { day, energy, info });
+    if (info.status !== "neutral") selected.set(day, { day, energy, personalNumber, info });
   }
   return selected;
 };
@@ -89,9 +119,9 @@ const monthCalendar = (birth, date = new Date()) => {
   for (let i = 0; i < offset; i += 1) cells.push('<span class="personal-month-empty"></span>');
   for (let day = 1; day <= total; day += 1) {
     const current = new Date(year, month, day);
-    const energy = personalDay(birth, current);
+    const { energy, personalNumber } = personalDay(birth, current);
     const info = marked.get(day)?.info || { status: "neutral", label: "" };
-    cells.push(`<button type="button" class="personal-month-day personal-month-${info.status}" data-month-day="${day}" aria-label="День ${day}, ${esc(info.label || `личный день ${energy}`)}">${day}</button>`);
+    cells.push(`<button type="button" class="personal-month-day personal-month-${info.status}" data-month-day="${day}" aria-label="День ${day}, ${esc(info.label || `личный день ${energy} · ${personalNumber}`)}">${day}</button>`);
   }
   return `<section class="personal-month-preview">
     <div class="personal-month-heading"><div><p class="personal-month-kicker">Карта ближайших дней</p><h3>${esc(monthTitle(date))}</h3></div><span class="personal-month-mark">✦</span></div>
@@ -132,7 +162,7 @@ export const openPersonalDay = () => {
     submit.textContent = "Считаю ваш день…";
     const item = await loadPersonalDay(birth);
     result.hidden = false;
-    result.innerHTML = `<section class="personal-day-main"><span class="personal-day-code">${item.energy} · ${item.calendarDay}</span><p class="personal-day-label">ВАШ ДЕНЬ</p>${paragraphs([item.text])}${item.todayNeed?.length ? `<section class="personal-day-advice personal-day-need"><h4><span class="personal-day-advice-icon">✓</span> Сегодня нужно</h4><ul>${bullets(item.todayNeed)}</ul></section>` : ""}${item.todayAvoid?.length ? `<section class="personal-day-advice personal-day-avoid"><h4><span class="personal-day-advice-icon">×</span> Сегодня нельзя</h4><ul>${bullets(item.todayAvoid)}</ul></section>` : ""}</section>`;
+    result.innerHTML = `<section class="personal-day-main"><span class="personal-day-code">${item.energy} · ${item.personalNumber}</span><p class="personal-day-label">ВАШ ДЕНЬ</p>${paragraphs([item.text])}${item.todayNeed?.length ? `<section class="personal-day-advice personal-day-need"><h4><span class="personal-day-advice-icon">✓</span> Сегодня нужно</h4><ul>${bullets(item.todayNeed)}</ul></section>` : ""}${item.todayAvoid?.length ? `<section class="personal-day-advice personal-day-avoid"><h4><span class="personal-day-advice-icon">×</span> Сегодня нельзя</h4><ul>${bullets(item.todayAvoid)}</ul></section>` : ""}</section>`;
     result.insertAdjacentHTML("beforeend", monthCalendar(birth));
     const monthDetails = result.querySelector(".personal-month-details");
     const monthList = result.querySelector(".personal-month-detail-list");
@@ -204,7 +234,7 @@ export const openPersonalDay = () => {
         const days = await Promise.all(Array.from({ length: total }, (_, index) => {
           const day = index + 1;
           return loadPersonalDay(birth, new Date(now.getFullYear(), now.getMonth(), day)).then((item) => ({
-            day, item, info: calendarInfo(item.energy, day)
+            day, item, info: calendarInfo(item.energy, item.personalNumber)
           }));
         }));
 
@@ -265,7 +295,8 @@ export const openPersonalDay = () => {
     
     result.querySelectorAll("[data-month-day]:not(.personal-month-locked)").forEach((button) => button.addEventListener("click", () => {
       const chosen = new Date(new Date().getFullYear(), new Date().getMonth(), Number(button.dataset.monthDay));
-      alert(`Личный день ${personalDay(birth, chosen)} уже рассчитан в вашем календаре.`);
+      const { energy, personalNumber } = personalDay(birth, chosen);
+      alert(`Личный день ${energy} · ${personalNumber} уже рассчитан в вашем календаре.`);
     }));
     requestAnimationFrame(() => { animateScroll(card, Math.max(0, result.offsetTop - 16)); });
     submit.textContent = "Рассчитать личный день";
