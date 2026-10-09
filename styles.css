@@ -22,6 +22,11 @@
   width:46px;height:46px;padding:0;border:0;border-radius:50%;
   background:#ecf0f7;color:#31517a;font:32px/1 Arial,sans-serif;
 }
+.personal-day-page .personal-day-back{
+  display:inline-flex;align-items:center;justify-content:flex-start;
+  min-height:40px;margin:-5px 56px 9px 0;padding:0 4px;border:0;
+  background:transparent;color:#31517a;font-size:16px;font-weight:800;
+}
 .personal-day-page .eyebrow{
   margin:5px 56px 10px 0;color:#7d8ea7;font-size:11px;font-weight:800;
   letter-spacing:.16em;text-transform:uppercase;
@@ -265,4 +270,294 @@ section.personal-day-main .personal-day-label{display:block;margin:0 0 18px;colo
   display:block;
   grid-column:2;
   grid-row:1;
+}
+
+
+/* Дневные рекомендации: шире, компактнее, рельефнее. */
+.personal-day-main .personal-day-advice{
+  box-sizing:border-box;
+  width:100%;
+  margin:18px 0 0;
+  padding:17px 19px 19px;
+  border-width:1.5px;
+  border-radius:20px;
+  box-shadow:0 8px 24px rgba(34,61,84,.08), inset 0 1px rgba(255,255,255,.72);
+}
+.personal-day-main .personal-day-need{
+  background:linear-gradient(140deg,#e2f7ec,#f3fcf7);
+  border-color:#7bd8a6;
+}
+.personal-day-main .personal-day-avoid{
+  background:linear-gradient(140deg,#ffedeb,#fff8f7);
+  border-color:#f0a09a;
+}
+.personal-day-main .personal-day-advice h4{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  margin:0 0 13px !important;
+  font-size:20px;
+  line-height:1.15;
+}
+.personal-day-main .personal-day-advice-icon{
+  flex:0 0 34px;
+  width:34px;
+  height:34px;
+  margin:0;
+  font-size:23px;
+}
+.personal-day-main .personal-day-advice ul{
+  display:grid;
+  gap:9px;
+  margin:0;
+  padding-left:21px;
+}
+.personal-day-main .personal-day-advice li{
+  margin:0 !important;
+  font-size:15px;
+  line-height:1.4;
+}
+
+/* Календарь открывается только кнопкой «Важные числа месяца». */
+.personal-month-important{
+  margin-top:15px;
+  padding:0;
+  border:0;
+  border-radius:21px;
+  background:transparent;
+  box-shadow:none;
+}
+.personal-month-important .personal-month-open{
+  width:100%;
+  min-height:55px;
+  margin:0;
+  padding:14px 18px;
+  border-radius:17px;
+  background:linear-gradient(135deg,#2d4878,#5b72a3);
+  box-shadow:0 10px 22px rgba(45,72,120,.18);
+  font-size:16px;
+}
+.personal-month-important .personal-month-content{
+  margin-top:13px;
+  padding:19px 18px;
+  border:1px solid rgba(172,149,115,.27);
+  border-radius:21px;
+  background:rgba(255,255,255,.88);
+}
+.personal-month-content[hidden]{display:none!important}
+.personal-month-important .personal-month-day{cursor:default;font-size:14px}
+.personal-month-important .personal-month-detail-list{margin-top:16px}
+.personal-month-important .personal-month-summary{
+  margin:10px 0;
+  padding:17px 16px;
+  border-radius:20px;
+}
+.personal-month-important .personal-month-summary h4{
+  margin:0 0 12px;
+  gap:10px;
+  font-size:21px;
+  line-height:1.15;
+}
+.personal-month-important .personal-month-summary-icon{
+  width:41px;
+  height:41px;
+  flex:0 0 41px;
+  font-size:26px;
+}
+.personal-month-important .personal-month-summary div{gap:10px}
+.personal-month-important .personal-month-summary-line{
+  font-size:16px;
+  line-height:1.3;
+  grid-template-columns:18px minmax(0,1fr);
+}
+.personal-month-important .personal-month-summary-line i{font-size:22px}
+.personal-month-empty-note{margin:0;color:#52657e;font-size:14px}
+@media(max-width:560px){
+  .personal-day-main .personal-day-advice{width:100%;padding:15px 15px 17px;border-radius:19px}
+  .personal-day-main .personal-day-advice h4{margin-bottom:11px !important;font-size:19px}
+  .personal-day-main .personal-day-advice ul{gap:8px;padding-left:19px}
+  .personal-day-main .personal-day-advice li{font-size:15px;line-height:1.4}
+  .personal-month-important .personal-month-content{padding:17px 13px}
+  .personal-month-important .personal-month-summary{padding:16px 14px}
+  .personal-month-important .personal-month-summary h4{font-size:19px}
+  .personal-month-important .personal-month-summary-line{font-size:15px}
+}
+
+
+/* iOS Safari: отказаться от вложенного прокручиваемого fixed-окна.
+   Снимок экрана может менять visual viewport и сбрасывать его scrollTop. */
+@supports (-webkit-touch-callout: none) {
+  body.personal-day-reading .app-shell { display:none!important }
+  body.personal-day-reading .personal-day-overlay {
+    position:relative;
+    inset:auto;
+    min-height:100svh;
+    height:auto;
+    width:100%;
+    padding:max(8px,env(safe-area-inset-top)) 6px max(18px,env(safe-area-inset-bottom));
+    display:grid;
+    place-items:start center;
+    align-content:start;
+  }
+  body.personal-day-reading .personal-day-page {
+    height:auto;
+    max-height:none;
+    overflow:visible;
+    -webkit-overflow-scrolling:auto;
+    overscroll-behavior:auto;
+  }
+}
+
+
+/* Важные числа: выразительный мини-календарь перед CTA, без платёжной цены. */
+.personal-month-important .personal-month-teaser{
+  padding:20px 19px 19px;
+  border:1px solid rgba(177,164,194,.28);
+  border-radius:23px;
+  background:linear-gradient(151deg,#fffdfb,#f4f0fa 59%,#eaf0fc);
+  box-shadow:0 12px 32px rgba(37,50,83,.11),inset 0 1px rgba(255,255,255,.95);
+}
+.personal-month-teaser-kicker{
+  margin:0 0 8px;
+  color:#866fa6;
+  font:800 11px/1.2 Inter,system-ui,sans-serif;
+  letter-spacing:.16em;
+  text-align:center;
+}
+.personal-month-important .personal-month-teaser-title{
+  margin:0 0 7px;
+  color:#273f6f;
+  font:700 clamp(27px,6.3vw,35px)/1.12 Georgia,serif;
+  letter-spacing:-.04em;
+  text-align:center;
+}
+.personal-month-teaser-subtitle{
+  margin:0 0 17px;
+  color:#963646;
+  font-size:16px;
+  line-height:1.35;
+  font-weight:800;
+  text-align:center;
+}
+.personal-month-teaser-board{
+  padding:15px 11px 13px;
+  border:1px solid #e4e7f0;
+  border-radius:20px;
+  background:#fff;
+  box-shadow:0 5px 19px rgba(43,57,90,.06);
+}
+.personal-month-teaser-weekdays,
+.personal-month-teaser-grid{
+  display:grid;
+  grid-template-columns:repeat(7,minmax(0,1fr));
+  gap:5px;
+}
+.personal-month-teaser-weekdays{margin-bottom:8px}
+.personal-month-teaser-weekdays span{
+  color:#8793a7;
+  text-align:center;
+  font-size:11px;
+  font-weight:800;
+}
+.personal-month-teaser-day,
+.personal-month-teaser-empty{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-width:0;
+  aspect-ratio:1;
+  border:1px solid transparent;
+  border-radius:11px;
+  font-size:14px;
+  font-weight:800;
+}
+.personal-month-teaser-day{background:#eef1f6;color:#4d6280}
+.personal-month-teaser-good{
+  color:#08743e;border-color:#95dab1;background:linear-gradient(155deg,#c0f3d4,#e9faf0);
+}
+.personal-month-teaser-risk{
+  color:#b72429;border-color:#efaaa9;background:linear-gradient(155deg,#ffccc8,#fff0ee);
+}
+.personal-month-teaser-chance{
+  color:#9b6d13;border-color:#e5cc83;background:linear-gradient(155deg,#ffe2a1,#fff5dc);
+}
+.personal-month-teaser-locked{
+  color:#99a0ae;border-color:#e2e4e8;background:#e9ebf0;
+  opacity:.7;
+}
+.personal-month-teaser-warning{
+  outline:2px solid #e24d48;
+  outline-offset:-2px;
+  box-shadow:0 0 0 2px rgba(226,77,72,.1);
+}
+.personal-month-teaser-warning b{
+  position:absolute;
+  top:-5px;right:-5px;
+  display:grid;place-items:center;
+  width:17px;height:17px;
+  border-radius:50%;
+  background:#d32e2e;color:white;
+  font:900 12px/1 Inter,system-ui,sans-serif;
+  box-shadow:0 3px 8px rgba(211,46,46,.25);
+}
+.personal-month-teaser-warning-note{
+  display:grid;
+  grid-template-columns:27px minmax(0,1fr);
+  gap:0 9px;
+  align-items:center;
+  margin-top:13px;
+  padding:10px 12px;
+  border:1px solid #f1aca8;
+  border-radius:13px;
+  background:linear-gradient(115deg,#fff0ef,#fff8f5);
+  color:#ac2328;
+}
+.personal-month-teaser-warning-note > span{
+  display:grid;place-items:center;
+  grid-row:1 / span 2;
+  width:27px;height:27px;
+  border-radius:50%;
+  background:#d92e32;color:#fff;
+  font-size:19px;font-weight:900;
+}
+.personal-month-teaser-warning-note strong{
+  font-size:16px;
+  font-weight:900;
+  letter-spacing:.055em;
+}
+.personal-month-teaser-warning-note small{
+  margin-top:2px;
+  color:#8b4b4a;
+  font-size:12px;
+  line-height:1.3;
+}
+.personal-month-teaser-footnote{
+  margin:10px 0 0;
+  color:#8894a7;
+  font-size:11px;
+  line-height:1.35;
+  text-align:center;
+}
+.personal-month-teaser-copy{
+  margin:15px 2px 0;
+  color:#435474;
+  font-size:15px;
+  line-height:1.52;
+  text-align:center;
+}
+.personal-month-important .personal-month-open{
+  margin-top:13px;
+  min-height:58px;
+  font-size:16px;
+}
+@media(max-width:560px){
+  .personal-month-important .personal-month-teaser{padding:17px 13px 16px;border-radius:22px}
+  .personal-month-teaser-board{padding:13px 9px 12px}
+  .personal-month-teaser-weekdays,.personal-month-teaser-grid{gap:4px}
+  .personal-month-teaser-day,.personal-month-teaser-empty{font-size:13px;border-radius:9px}
+  .personal-month-teaser-subtitle{font-size:15px}
+  .personal-month-teaser-copy{font-size:14px}
+  .personal-month-teaser-warning-note strong{font-size:15px}
 }
