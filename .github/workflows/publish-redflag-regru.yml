@@ -1,0 +1,28 @@
+name: Publish Red Flag JSON to REG.RU
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: redflag-public-to-regru
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out approved Red Flag release
+        uses: actions/checkout@v4
+      - name: Validate manifest and JSON without accessing REG.RU
+        run: |
+          python3 -m py_compile scripts/publish-redflag.py
+          python3 scripts/publish-redflag.py --validate-only
+      - name: Back up, publish and read back only approved Red Flag JSON
+        env:
+          REG_FTP_USER: ${{ secrets.REG_FTP_USER }}
+          REG_FTP_PASSWORD: ${{ secrets.REG_FTP_PASSWORD }}
+        run: python3 scripts/publish-redflag.py
