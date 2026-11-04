@@ -46,7 +46,7 @@ def prepare():
             raise ValueError("Source outside Red Flag directory")
         if not isinstance(target, str) or not target.startswith(TARGET_PREFIX):
             raise ValueError("Target outside Red Flag directory")
-        if target != source.removeprefix("release/"):
+        if target != source.removeprefix("release/redflag/"):
             raise ValueError("Source and target do not match")
         if target in targets:
             raise ValueError("Duplicate target in release")
