@@ -1,0 +1,35 @@
+name: REG.RU FTPS read-only check with hosting username
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/verify-regru-hosting-user.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Check existing REG.RU hosting login only, no writes
+        env:
+          REG_FTP_PASSWORD: ${{ secrets.REG_FTP_PASSWORD }}
+        run: |
+          python3 - <<'PY'
+          import ftplib, os, ssl
+          if not os.environ.get("REG_FTP_PASSWORD"):
+              raise RuntimeError("FTP_PASSWORD_SECRET_MISSING")
+          ftp = ftplib.FTP_TLS(context=ssl.create_default_context(), timeout=25)
+          ftp.connect("server172.hosting.reg.ru", 21)
+          try:
+              ftp.login("u3643964", os.environ["REG_FTP_PASSWORD"])
+              ftp.prot_p()
+              ftp.cwd(ftp.pwd().rstrip("/") + "/www/xn--c1adkkdfjbp1a4l.online")
+              print("FTP_KNOWN_HOST_USER_AUTHORIZED", flush=True)
+          finally:
+              try: ftp.quit()
+              except Exception: ftp.close()
+          PY
